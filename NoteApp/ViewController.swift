@@ -35,14 +35,35 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // 前回までのメモを取得（Optional型から、!で強制取り出し）
         let currentNote = textView.text!
         
+        // 現在日時の文字列を取得
+        let now = self.currentTimeText()
+        
         // メモの先頭に入力値を追加した文字列を作成（間に改行を挟む）
-        let newNote = "\(line)\n\(currentNote)"
+        let newNote = "[\(now)] \(line)\n\(currentNote)"
         
         // テキストビューの表示文字列を、新しいメモで更新
         textView.text = newNote
         
         // テキストフィールドの入力内容をクリア
         textField.text = ""
+    }
+
+    /// 現在日時文字列を返すメソッド
+    func currentTimeText() -> String {
+        // 現在日時
+        let now = NSDate()
+        
+        // 日時フォーマットオブジェクト
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .ShortStyle
+        dateFormatter.timeStyle = .ShortStyle
+        
+        // 日付をGMTでなく、日本のロケールでフォーマットするように指定
+        dateFormatter.locale = NSLocale(localeIdentifier: "ja_JP")
+        
+        // 日付をフォーマットし、文字列として返す
+        let nowText = dateFormatter.stringFromDate(now)
+        return nowText
     }
 
     // MARK: - UITextFieldDelegate
