@@ -10,6 +10,9 @@ import UIKit
 
 /// UITextFieldDelegateプロトコルを適用することで、ビューコントローラ自体がdelegateとなる
 class ViewController: UIViewController, UITextFieldDelegate {
+    /// データ永続化用のユーザデフォルトオブジェクト
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var textView: UITextView!
 
@@ -25,6 +28,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // テキストフィールドのdelegateには、ビューコントローラ自身を指定
         textField.delegate = self
+        
+        // キー "note" で保存済みのメモがあれば、あらかじめ表示しておく
+        if let storedNote = defaults.stringForKey("note") {
+            textView.text = storedNote
+        }
     }
 
     /// 入力内容をメモに追加するメソッド
@@ -43,6 +51,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // テキストビューの表示文字列を、新しいメモで更新
         textView.text = newNote
+        
+        // 更新したメモの内容を、ユーザデフォルトを利用して永続化
+        defaults.setObject(newNote, forKey: "note")
+        defaults.synchronize()
         
         // テキストフィールドの入力内容をクリア
         textField.text = ""
