@@ -3,7 +3,7 @@
 //  NoteApp
 //
 //  Created by Hiroyuki Aoki on 2016/03/23.
-//  Copyright © 2016年 sample. All rights reserved.
+//  Copyright © 2016年 Casareal,Inc. All rights reserved.
 //
 
 import UIKit
